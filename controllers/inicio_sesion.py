@@ -16,11 +16,12 @@ class InicioSesion:
             password = datos.password
             print(f"email: {email}, password: {password}")
             usuario = iniciar_sesion(email, password)
-            print(f"datos del usuario: {usuario}")
+            print(f"usuario: {usuario}")
                 
 
             if usuario:
-                return web.seeother('/bienvenida_admin')
+                print("redireccionando a /bienvenida_admin")
+                raise web.seeother('/bienvenida_admin')
             else:
                 mensaje ="Correo o contraseña incorrectos."
                 return render.inicio_sesion(mensaje) 

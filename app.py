@@ -1,3 +1,4 @@
+import os
 import web  # Carga la librería web.py
 
 # Importar controladores
@@ -11,7 +12,6 @@ urls = (
     '/', 'Index',
     '/usuario', 'Usuario',
     '/inicio_sesion', 'InicioSesion',
-    '/static/(.*)', 'Static',
     '/bienvenida_admin', 'BienvenidaAdmin',
 )
 
