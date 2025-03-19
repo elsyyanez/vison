@@ -5,22 +5,28 @@ render = web.template.render('views/')
 
 class InicioSesion:
     def GET(self):
-        return render.inicio_sesion()
+        # Este es el mensaje que se quere imprimir
+        mensaje=None
+        return render.inicio_sesion(mensaje)
 
-        def POST(self):
-            try:
-                datos = web.input()
-                email = datos.email
-                password = datos.password
+    def POST(self):
+        try:
+            datos = web.input()
+            email = datos.email
+            password = datos.password
+            print(f"email: {email}, password: {password}")
+            usuario = iniciar_sesion(email, password)
+            print(f"datos del usuario: {usuario}")
+                
 
-                usuarios = iniciar_sesion(email, password)
+            if usuario:
+                return web.seeother('/bienvenida_admin')
+            else:
+                mensaje ="Correo o contraseña incorrectos."
+                return render.inicio_sesion(mensaje) 
 
-                if usuarios:
-                    return web.seeother('/bienvenida_admin')
-                else:
-                    return render.iniciosesion(error="Correo o contraseña incorrectos.") 
-            
-            except Exception as e:
-                error_msg = f" Error en inicio de sesión: {str(e)}"
-                print(error_msg)  
-                return render.iniciosesion(error=error_msg)
+        # Se llama al mensaje 
+        except Exception as e:
+            mensaje = f" Error en inicio de sesión: {str(e)}"
+            print(mensaje)  
+            return render.inicio_sesion(mensaje)

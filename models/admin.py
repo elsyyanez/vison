@@ -12,14 +12,16 @@ firebase = pyrebase.initialize_app(firebase_config)
 auth = firebase.auth()
 db = firebase.database()
 
-def iniciar_sesion(correo, password):
+def iniciar_sesion(email, password):
     """Autentica un usuario en Firebase y recupera sus datos"""
     try:
-        user = auth.sign_in_with_email_and_password(correo, password)
+        user = auth.sign_in_with_email_and_password(email, password)
         uid = user["localId"]
-        
+        print (f"user: {user}")
+        print (f"uid: {uid}")
         # Reemplazamos '.' por ',' para evitar errores en la estructura de Firebase
-        datos_usuario = db.child("usuarios").child(correo.replace(".", ",")).get().val()
+        datos_usuario = db.child("usuarios").child(uid).get().val()
+        print(f"datos usuario: {datos_usuario}")
 
         if datos_usuario:
             print("Inicio de sesión exitoso.")
